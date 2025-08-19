@@ -7,6 +7,7 @@ sd = 100;
 bih = 0.03 * sd / FI;         //Height of big indexes
 kmh(100, true, 18, 270, bih);
 skm(100 * 1.3, 18, 270, bih);
+circle(d = sd / 7);
 
 module skm(sd, max_kmh_index, angleWith, bih)
 {
