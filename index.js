@@ -10,18 +10,24 @@
 // 	console.log(position);
 // });
 const arrow = document.getElementById('arrow');
-let speed = 0;
-const arrowSpeed = 10; //deg per sec;
+let kmh = 0;
+const arrowSpeed = 30; //kmh per sec;
 const q = setInterval(() =>
 {
-	speed += 10;
-	if (speed > 180) speed = 0;
-	const speedDelta = 10;
-	arrow.style.transform = `rotate(${speed}deg)`;
-	arrow.style.transitionDuration = `${speedDelta / arrowSpeed}s`;
-	//console.log(speed);
+	kmh += 10;
+	if (kmh > 180) kmh = 0;
+	const kmhDelta = 10;
+	const angle = kmhToAngle(kmh);
+	arrow.style.transform = `rotate(${angle}deg)`;
+	arrow.style.transitionDuration = `${kmhDelta / arrowSpeed}s`;
+	console.log(kmh, angle);
 }, 1000);
 setTimeout(() =>
 {
 	clearInterval(q);
-}, 10000);
+}, 40000);
+
+function kmhToAngle(kmh)
+{
+	return (kmh - 150) * 1.5;
+}

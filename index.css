@@ -29,8 +29,9 @@ main
 	background-color: red;
 	position: relative;
 	top: 56.5%;
-	left: 50%;
+	left: 50.5%;
 	transform-origin: left;
+	transform: rotate(-225deg);
 	transition-property: transform;
 	transition-timing-function: linear;
 }
