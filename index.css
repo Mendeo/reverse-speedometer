@@ -1,0 +1,36 @@
+@font-face
+{
+	font-family: 'PT Sans'; 
+	src: url('pts55f_w.eot'); 
+	src: local('PT Sans'), url('ptsansweb/PTS55F_W.eot?#iefix') format('embedded-opentype'), url('ptsansweb/PTS55F_W.woff') format('woff'),url('ptsansweb/PTS55F_W.ttf') format('truetype'), url('ptsansweb/PTS55F_W.svg#PTSans-Regular') format('svg');
+}
+
+main
+{
+	display: flex;
+	justify-content: center;
+}
+
+#speedometer
+{
+	background-image: url(/speedometer.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	border: 2px solid black;
+	width: 30%;
+	aspect-ratio: 1 / 1;
+}
+
+#arrow
+{
+	width: 49%;
+	height: 0.5%;
+	background-color: red;
+	position: relative;
+	top: 56.5%;
+	left: 50%;
+	transform-origin: left;
+	transition-property: transform;
+	transition-timing-function: linear;
+}
