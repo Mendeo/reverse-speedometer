@@ -38,7 +38,7 @@ module skm(sd, max_kmh_index, angleWith, bih)
 		//Вырезаем нужный угол
 		p3 = angle(3) + 180;
 		p0 = angle(0) + 180;
-			polygon(points=[[0,0], [-sd * cos(p0), -sd * sin(p0)], [-sd * cos(p3), -sd * sin(p3)]]);
+		polygon(points=[[0,0], [-sd * cos(p0), -sd * sin(p0)], [-sd * cos(p3), -sd * sin(p3)]]);
 		//Рисуем кольцо
 		difference()
 		{
