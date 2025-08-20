@@ -3,9 +3,10 @@
 let isGeoError = false;
 const geoError = document.getElementById('geo-error');
 const arrow = document.getElementById('arrow');
+const kmhElement = document.querySelector('#values > span:first-child');
+const skmElement = document.querySelector('#values > span:last-child');
 
 const arrowSpeed = 180; //kmh per sec;
-let prevKmh = 0;
 
 const geoId = navigator.geolocation.watchPosition((position) => {
 	if (isGeoError)
@@ -15,10 +16,16 @@ const geoId = navigator.geolocation.watchPosition((position) => {
 	}
 	if (position.coords.speed)
 	{
-		moveArrow(position.speed);
-		//const rndSpeed = Math.random() * 50;
-		//console.log(rndSpeed);
-		//moveArrow(rndSpeed);
+		const kmh = position.coords.speed * 3.6;
+		//const kmh = 1;
+		let skm = kmh > 0 ? 3600 / kmh : Infinity;
+		if (skm > 3600) skm = Infinity;
+		moveArrow(kmh);
+		//Showing speed as text
+		const kmh_r = kmh.toFixed(0);
+		const skm_r = skm === Infinity ? '∞' : toThreeSignificantDigits(skm);
+		kmhElement.innerText = kmh_r;
+		skmElement.innerText = skm_r;
 	}
 	else
 	{
@@ -45,21 +52,25 @@ const geoId = navigator.geolocation.watchPosition((position) => {
 	enableHighAccuracy: true
 });
 
-function moveArrow(geolocationSpeed)
+let prevKmh = 0;
+function moveArrow(kmh)
 {
-	const kmh = geolocationSpeed * 3.6;
 	if (kmh > 180) kmh = 180;
-	const kmhDelta = Math.abs(kmh - prevKmh);
+	if (Math.round(kmh) !== Math.round(prevKmh))
+	{
+		const kmhDelta = Math.abs(kmh - prevKmh);
+		const angle = kmhToAngle(kmh);
+		arrow.style.transform = `rotate(${angle}deg)`;
+		arrow.style.transitionDuration = `${kmhDelta / arrowSpeed}s`;
+	}
 	prevKmh = kmh;
-	const angle = kmhToAngle(kmh);
-	arrow.style.transform = `rotate(${angle}deg)`;
-	arrow.style.transitionDuration = `${kmhDelta / arrowSpeed}s`;
 }
 
 function removeGeoError()
 {
 	geoError.style.display = 'none';
 	arrow.style.display = 'block';
+
 }
 function showGeoError(text)
 {
@@ -68,26 +79,16 @@ function showGeoError(text)
 	arrow.style.display = 'none';
 }
 
-
-
-let kmh = 0;
-
-const q = setInterval(() =>
-{
-	kmh += 10;
-	let kmhDelta = 10;
-	if (kmh > 180)
-	{
-		kmh = 0;
-		kmhDelta = 180;
-	}
-	
-
-}, 1000);
-
-
-
 function kmhToAngle(kmh)
 {
 	return (kmh - 150) * 1.5;
+}
+
+function toThreeSignificantDigits(value)
+{
+	const intValue = value.toFixed(0)
+	const intLength = intValue === '0' ? 0 : intValue.length;
+	const frac = 3 - intLength;
+	const result = (Math.round(value * Math.pow(10, frac)) / Math.pow(10, frac));
+	return result.toString().replace('.', ',')
 }
