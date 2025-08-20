@@ -26,10 +26,10 @@ main
 {
 	width: 49%;
 	height: 0.5%;
-	background-color: red;
+	background-color: black;
 	position: relative;
-	top: 56.5%;
-	left: 50.5%;
+	top: 56.65%;
+	left: 50.43%;
 	transform-origin: left;
 	transform: rotate(-225deg);
 	transition-property: transform;

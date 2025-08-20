@@ -5,9 +5,15 @@ FI = (sqrt(5) + 1) / 2;
 
 sd = 100;
 bih = 0.03 * sd / FI;         //Height of big indexes
-kmh(100, true, 18, 270, bih);
-skm(100 * 1.3, 18, 270, bih);
+kmh(sd, true, 18, 270, bih);
+skm(sd * 1.3, 18, 270, bih);
 circle(d = sd / 7);
+
+translate([0, (sd / 2 - (sd * 0.06)) / FI])
+text("км/ч", size = 7, halign="center", valign = "center", font = digitsFont);
+
+translate([0, sd / 2 + (sd * 1.3 / 2 - 4 - sd / 2) / FI])
+text("сек/км", size = 3, halign="center", valign = "center", font = digitsFont);
 
 module skm(sd, max_kmh_index, angleWith, bih)
 {
