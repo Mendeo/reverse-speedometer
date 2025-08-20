@@ -21,6 +21,12 @@ main
 	width: 30%;
 	aspect-ratio: 1 / 1;
 }
+@media (max-width: 900px) {
+	#speedometer
+	{
+		width: 100%;
+	}
+}
 
 #arrow
 {
@@ -34,4 +40,13 @@ main
 	transform: rotate(-225deg);
 	transition-property: transform;
 	transition-timing-function: linear;
+}
+
+.error
+{
+	color:tomato;
+	text-align: center;
+	width: 100%;
+	font-size: large;
+	display: none;
 }

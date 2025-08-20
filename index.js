@@ -1,17 +1,78 @@
 'use strict';
-// navigator.geolocation.getCurrentPosition(location =>
-// {
-// 	// console.log(location.coords.latitude);
-// 	// console.log(location.coords.longitude);
-// 	// console.log(location.coords.accuracy);
-// 	console.log(location);
-// });
-// navigator.geolocation.watchPosition(position => {
-// 	console.log(position);
-// });
+
+let isGeoError = false;
+const geoError = document.getElementById('geo-error');
 const arrow = document.getElementById('arrow');
-let kmh = 0;
+
 const arrowSpeed = 180; //kmh per sec;
+let prevKmh = 0;
+
+const geoId = navigator.geolocation.watchPosition((position) => {
+	if (isGeoError)
+	{
+		isGeoError = false;
+		removeGeoError();
+	}
+	//console.log(position);
+	if (true || position.coords.speed)
+	{
+		const rndSpeed = Math.random() * 50;
+		console.log(rndSpeed);
+		//moveArrow(position.speed);
+		moveArrow(rndSpeed);
+	}
+	else
+	{
+		showGeoError('Скорость пока недоступна.');
+		isGeoError = true;
+	}
+}, (err) =>
+{
+	isGeoError = true;
+	switch (err.code)
+	{
+		case GeolocationPositionError.TIMEOUT:
+		showGeoError('Время получения геолокации истекло.');
+		break;
+	case GeolocationPositionError.PERMISSION_DENIED:
+		showGeoError('Вы запретили отслеживание своей геопозиции.');
+		break;
+	case GeolocationPositionError.POSITION_UNAVAILABLE:
+		showGeoError('Получить местоположение не удалось.');
+		break;
+	}
+}, {
+	maximumAge: 0,
+	enableHighAccuracy: true
+});
+
+function moveArrow(geolocationSpeed)
+{
+	const kmh = geolocationSpeed * 3.6;
+	if (kmh > 180) kmh = 180;
+	const kmhDelta = Math.abs(kmh - prevKmh);
+	prevKmh = kmh;
+	const angle = kmhToAngle(kmh);
+	arrow.style.transform = `rotate(${angle}deg)`;
+	arrow.style.transitionDuration = `${kmhDelta / arrowSpeed}s`;
+}
+
+function removeGeoError()
+{
+	geoError.style.display = 'none';
+	arrow.style.display = 'block';
+}
+function showGeoError(text)
+{
+	geoError.innerText = text;
+	geoError.style.display = 'inline-block';
+	arrow.style.display = 'none';
+}
+
+
+
+let kmh = 0;
+
 const q = setInterval(() =>
 {
 	kmh += 10;
@@ -22,18 +83,10 @@ const q = setInterval(() =>
 		kmhDelta = 180;
 	}
 	
-	const angle = kmhToAngle(kmh);
-	arrow.style.transform = `rotate(${angle}deg)`;
-	arrow.style.transitionDuration = `${kmhDelta / arrowSpeed}s`;
-	console.log(kmh, angle);
+
 }, 1000);
 
-/*
-setTimeout(() =>
-{
-	clearInterval(q);
-}, 40000);
-*/
+
 
 function kmhToAngle(kmh)
 {
