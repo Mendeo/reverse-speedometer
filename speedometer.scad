@@ -1,4 +1,4 @@
-use <ptsansweb/PTS55F_W.ttf>
+use <ptsans_openscad/PTS55F_W.ttf>
 digitsFont = "PT Sans:style=Regular";
 $fn = 360;
 FI = (sqrt(5) + 1) / 2;
