@@ -13,13 +13,12 @@ const geoId = navigator.geolocation.watchPosition((position) => {
 		isGeoError = false;
 		removeGeoError();
 	}
-	//console.log(position);
-	if (true || position.coords.speed)
+	if (position.coords.speed)
 	{
-		const rndSpeed = Math.random() * 50;
-		console.log(rndSpeed);
-		//moveArrow(position.speed);
-		moveArrow(rndSpeed);
+		moveArrow(position.speed);
+		//const rndSpeed = Math.random() * 50;
+		//console.log(rndSpeed);
+		//moveArrow(rndSpeed);
 	}
 	else
 	{
