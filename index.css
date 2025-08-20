@@ -16,6 +16,20 @@ main
 	justify-content: center;
 }
 
+.container
+{
+	width: 30%;
+	aspect-ratio: 1 / 1;
+	position: relative;
+}
+
+@media (max-width: 900px) {
+	.container
+	{
+		width: 100%;
+	}
+}
+
 #speedometer
 {
 	background-image: url(/speedometer.png);
@@ -23,14 +37,8 @@ main
 	background-position: center;
 	background-size: contain;
 	border: 2px solid black;
-	width: 30%;
-	aspect-ratio: 1 / 1;
-}
-@media (max-width: 900px) {
-	#speedometer
-	{
-		width: 100%;
-	}
+	width: 100%;
+	height: 100%;
 }
 
 #arrow
@@ -50,9 +58,10 @@ main
 #values
 {
 	font-family: "PTMonoRegular";
-	font-size: x-large;
-	position: relative;
-	width: 10rem;
+	font-size: 100%;
+	position: absolute;
+	width: 30%;
+	height: 20%;
 	text-align: right;
 	top: 75%;
 	left: 35%;
