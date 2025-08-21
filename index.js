@@ -8,16 +8,18 @@ const skmElement = document.querySelector('#values > span:last-child');
 
 const arrowSpeed = 180; //kmh per sec;
 
+themeChanger();
+
 const geoId = navigator.geolocation.watchPosition((position) => {
 	if (isGeoError)
 	{
 		isGeoError = false;
 		removeGeoError();
 	}
-	if (position.coords.speed)
+	if (true || position.coords.speed)
 	{
-		const kmh = position.coords.speed * 3.6;
-		//const kmh = 1;
+		//const kmh = position.coords.speed * 3.6;
+		const kmh = 1;
 		let skm = kmh > 0 ? 3600 / kmh : Infinity;
 		if (skm > 3600) skm = Infinity;
 		moveArrow(kmh);
@@ -93,4 +95,81 @@ function toThreeSignificantDigits(value)
 	const frac = 3 - intLength;
 	const result = (Math.round(value * Math.pow(10, frac)) / Math.pow(10, frac));
 	return result.toString().replace('.', ',')
+}
+
+function themeChanger()
+{
+	const THEME_STORAGE_NAME = 'selected-theme';
+	const STORAGE_LIGHT_THEME = 'light';
+	const STORAGE_DARK_THEME = 'dark';
+	const STORAGE_AUTO_THEME = 'auto';
+
+	const radioLight = document.getElementById('radio-light-theme');
+	const radioDark = document.getElementById('radio-dark-theme');
+	const radioAuto = document.getElementById('radio-auto-theme');
+
+	const styleDark = document.getElementById('dark-theme-css');
+
+	const selectedTheme = localStorage.getItem(THEME_STORAGE_NAME);
+	setTheme(selectedTheme);
+
+	radioLight.addEventListener('change', onThemeChange);
+	radioDark.addEventListener('change', onThemeChange);
+	radioAuto.addEventListener('change', onThemeChange);
+
+	function setTheme(selectedTheme)
+	{
+		if (selectedTheme !== STORAGE_LIGHT_THEME && selectedTheme !== STORAGE_DARK_THEME && selectedTheme !== STORAGE_AUTO_THEME)
+		{
+			selectedTheme = STORAGE_AUTO_THEME;
+			setThemeToLocalStorage(STORAGE_AUTO_THEME);
+		}
+
+		if (selectedTheme === STORAGE_LIGHT_THEME)
+		{
+			styleDark.media = 'not all';
+			radioLight.checked = true;
+		}
+		else if (selectedTheme === STORAGE_DARK_THEME)
+		{
+			styleDark.media = 'all';
+			radioDark.checked = true;
+		}
+		else
+		{
+			styleDark.media = '(prefers-color-scheme: dark)';
+			radioAuto.checked = true;
+		}
+	}
+
+	function onThemeChange()
+	{
+		let selectedTheme = '';
+		let ifSet = false;
+		if (radioLight.checked)
+		{
+			selectedTheme = STORAGE_LIGHT_THEME;
+			ifSet = true;
+		}
+		else if (radioDark.checked)
+		{
+			selectedTheme = STORAGE_DARK_THEME;
+			ifSet = true;
+		}
+		else if (radioAuto.checked)
+		{
+			selectedTheme = STORAGE_AUTO_THEME;
+			ifSet = true;
+		}
+		if (ifSet)
+		{
+			setThemeToLocalStorage(selectedTheme);
+			setTheme(selectedTheme);
+		}
+	}
+
+	function setThemeToLocalStorage(value)
+	{
+		localStorage.setItem(THEME_STORAGE_NAME, value);
+	}
 }

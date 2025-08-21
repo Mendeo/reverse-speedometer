@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-	<title>Привет!</title>
+	<title>Обратный спидометр</title>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="index.css">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="stylesheet" href="/index.css">
+	<link rel="stylesheet" href="/dark.css" id="dark-theme-css" media="(prefers-color-scheme: dark)">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="icon" type="image/x-icon" href="favicon.ico">
+	
 </head>
 <body>
 	<main>
+		<fieldset class="theme_selector">
+			<label for="radio-light-theme" aria-label="Светлая тема"></label>
+			<input type="radio" id="radio-light-theme" title="Светлая тема" name="theme">
+			<label for="radio-auto-theme" aria-label="Системная тема"></label>
+			<input type="radio" id="radio-auto-theme" title="Системная тема" name="theme">
+			<label for="radio-dark-theme" aria-label="Тёмная тема"></label>
+			<input type="radio" id="radio-dark-theme" title="Тёмная тема" name="theme">
+			<div></div>
+		</fieldset>
 		<div class="container">
 			<div id="speedometer">
 				<div id="arrow"></div>
@@ -20,6 +31,7 @@
 				</div>
 			</div>
 		</div>
+		<a href="https://github.com/Mendeo/reverse-speedometer">Что это? (GitHub)</a>
 	</main>
 	<script type="text/javascript" src="index.js"></script>
 </body>
