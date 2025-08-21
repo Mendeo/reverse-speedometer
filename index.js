@@ -16,10 +16,10 @@ const geoId = navigator.geolocation.watchPosition((position) => {
 		isGeoError = false;
 		removeGeoError();
 	}
-	if (true || position.coords.speed)
+	if (position.coords.speed)
 	{
-		//const kmh = position.coords.speed * 3.6;
-		const kmh = 1;
+		const kmh = position.coords.speed * 3.6;
+		//const kmh = 1;
 		let skm = kmh > 0 ? 3600 / kmh : Infinity;
 		if (skm > 3600) skm = Infinity;
 		moveArrow(kmh);
