@@ -77,6 +77,8 @@ function showGeoError(text)
 	geoError.innerText = text;
 	geoError.style.display = 'inline-block';
 	arrow.style.display = 'none';
+	kmhElement.innerText = '-';
+	skmElement.innerText = '-';
 }
 
 function kmhToAngle(kmh)
