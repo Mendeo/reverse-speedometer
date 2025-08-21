@@ -31,13 +31,50 @@ main
 }
 #speedometer
 {
-	background-image: url('img/speedometer.png');
+	background-image: url('img/speedometer/speedometer_1152.png');
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: contain;
 	/*border: 2px solid black;*/
 	width: 100%;
 	height: 100%;
+}
+@media (max-width: 1920px)
+{
+	#speedometer
+	{
+		background-image: url('img/speedometer/speedometer_576.png');
+	}
+}
+/*После 900 px with становится 100%.
+Поэтому ниже max-width совпадает с фактическим разрешением*/
+@media (max-width: 900px)
+{
+	#speedometer
+	{
+		background-image: url('img/speedometer/speedometer_900.png');
+	}
+}
+@media (max-width: 576px)
+{
+	#speedometer
+	{
+		background-image: url('img/speedometer/speedometer_576.png');
+	}
+}
+@media (max-width: 396px)
+{
+	#speedometer
+	{
+		background-image: url('img/speedometer/speedometer_396.png');
+	}
+}
+@media (max-width: 264px)
+{
+	#speedometer
+	{
+		background-image: url('img/speedometer/speedometer_264.png');
+	}
 }
 #arrow
 {
@@ -124,7 +161,7 @@ main > a
 .theme_selector > div
 {
 	background-color: #d4d4d4;
-	background-image: url('img/circle.svg');
+	background-image: url('img/theme/circle.svg');
 	background-size: 1rem;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -152,21 +189,21 @@ main > a
 }
 #radio-light-theme
 {
-	background-image: url('img/sun.svg');
+	background-image: url('img/theme/sun.svg');
 	background-repeat: no-repeat;
 	background-position: 11%;
 	background-size: 0.85rem;
 }
 #radio-dark-theme
 {
-	background-image: url('img/moon.svg');
+	background-image: url('img/theme/moon.svg');
 	background-repeat: no-repeat;
 	background-position: 75%;
 	background-size: 0.4rem;
 } 
 #radio-auto-theme
 {
-	background-image: url('img/auto.svg');
+	background-image: url('img/theme/auto.svg');
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 0.5rem;
