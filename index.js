@@ -6,9 +6,14 @@ const arrow = document.getElementById('arrow');
 const kmhElement = document.querySelector('#values > span:first-child');
 const skmElement = document.querySelector('#values > span:last-child');
 
-const arrowSpeed = 180; //kmh per sec;
+const arrowSpeed = 60; //kmh per sec;
 
 themeChanger();
+
+let isWakeLockSupported = 'wakeLock' in navigator;
+if (!isWakeLockSupported) console.log('Wake lock is not supported by this browser.');
+let isWakeLock = false;
+let wakeLock = null;
 
 const geoId = navigator.geolocation.watchPosition((position) => {
 	if (isGeoError)
@@ -18,6 +23,11 @@ const geoId = navigator.geolocation.watchPosition((position) => {
 	}
 	if (position.coords.speed)
 	{
+		if (!isWakeLock)
+		{
+			getWakeLock();
+			isWakeLock = true;
+		}
 		const kmh = position.coords.speed * 3.6;
 		//const kmh = 1;
 		let skm = kmh > 0 ? 3600 / kmh : Infinity;
@@ -37,6 +47,12 @@ const geoId = navigator.geolocation.watchPosition((position) => {
 }, (err) =>
 {
 	isGeoError = true;
+	if (wakeLock) wakeLock.release().then(() =>
+	{
+		console.log('Wake lock released');
+		wakeLock = null;
+		isWakeLock = false;
+	});
 	switch (err.code)
 	{
 		case GeolocationPositionError.TIMEOUT:
@@ -171,5 +187,21 @@ function themeChanger()
 	function setThemeToLocalStorage(value)
 	{
 		localStorage.setItem(THEME_STORAGE_NAME, value);
+	}
+}
+
+async function getWakeLock()
+{
+	if (isWakeLockSupported)
+	{
+		try
+		{
+			wakeLock = await navigator.wakeLock.request("screen");
+			console.log('Wake Lock request successful');
+		}
+		catch (err)
+		{
+			console.log(`${err.name}, ${err.message}`);
+		}
 	}
 }
