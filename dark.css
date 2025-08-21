@@ -7,6 +7,10 @@ body
 {
 	background-color: DarkOrange;
 }
+a
+{
+	filter: invert(100%) brightness(80%) contrast(80%);
+}
 /*Блок, отвечающий за переключение темы (светлая, авто, тёмная)*/
 .theme_selector > input:focus-visible ~ div
 {
